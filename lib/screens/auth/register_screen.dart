@@ -1,0 +1,14 @@
+import 'package:flutter/material.dart';
+
+import 'role_selection_screen.dart';
+
+class RegisterScreen extends StatelessWidget {
+  static const String routeName = '/register';
+
+  const RegisterScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const RoleSelectionScreen();
+  }
+}

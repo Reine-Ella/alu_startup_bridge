@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1017907034066",
+    "project_id": "startupbridge-4c5de",
+    "storage_bucket": "startupbridge-4c5de.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1017907034066:android:8dfffbaf6d7bcd382cba0b",
+        "android_client_info": {
+          "package_name": "com.example.startup_bridge"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0hiVyEWkII8zLvwoMY4KzmIzYmpIzp_U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
