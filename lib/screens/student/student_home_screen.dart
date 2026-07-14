@@ -87,6 +87,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
 
     return Scaffold(
       backgroundColor: const Color(0xFFF8F7FC),
+      bottomNavigationBar: _buildStudentBottomNavigation(),
       body: StreamBuilder<List<OpportunityModel>>(
         stream: opportunityProvider.getAllOpportunities(),
         builder: (context, snapshot) {
@@ -108,7 +109,6 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
             controller: scrollController,
             child: Column(
               children: [
-                _buildStudentNavigation(),
                 _buildHeroSection(user?.name ?? 'Student'),
                 const SizedBox(height: 38),
 
@@ -199,58 +199,61 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
     );
   }
 
-  Widget _buildStudentNavigation() {
+  Widget _buildStudentBottomNavigation() {
     return Container(
-      height: 74,
-      padding: const EdgeInsets.symmetric(horizontal: 32),
-      color: Colors.white,
-      child: Row(
-        children: [
-          const Text(
-            'STARTUPBRIDGE',
-            style: TextStyle(
-              fontSize: 15,
-              letterSpacing: 1.4,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF1D1D1F),
-            ),
-          ),
-          const Spacer(),
-          _navButton('Home', goHome),
-          _navButton('My Applications', goApplications),
-          _navButton('Profile', goProfile),
-          const SizedBox(width: 16),
-          ElevatedButton(
-            onPressed: logout,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFFFB800),
-              foregroundColor: Colors.black,
-              elevation: 0,
-              padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(6),
-              ),
-            ),
-            child: const Text(
-              'Logout',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 12,
+            offset: const Offset(0, -4),
           ),
         ],
       ),
-    );
-  }
-
-  Widget _navButton(String text, VoidCallback onTap) {
-    return TextButton(
-      onPressed: onTap,
-      child: Text(
-        text,
-        style: const TextStyle(
-          color: Color(0xFF555555),
-          fontSize: 15,
-          fontWeight: FontWeight.w600,
+      child: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        currentIndex: 0,
+        backgroundColor: Colors.white,
+        selectedItemColor: const Color(0xFF6C35FF),
+        unselectedItemColor: const Color(0xFF555555),
+        selectedLabelStyle: const TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 12,
         ),
+        unselectedLabelStyle: const TextStyle(
+          fontWeight: FontWeight.w600,
+          fontSize: 12,
+        ),
+        onTap: (index) {
+          if (index == 0) {
+            goHome();
+          } else if (index == 1) {
+            goApplications();
+          } else if (index == 2) {
+            goProfile();
+          } else if (index == 3) {
+            logout();
+          }
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_rounded),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.assignment_outlined),
+            label: 'Applications',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline),
+            label: 'Profile',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.logout),
+            label: 'Logout',
+          ),
+        ],
       ),
     );
   }

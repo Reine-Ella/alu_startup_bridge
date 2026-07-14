@@ -88,7 +88,6 @@ class _StartupDashboardScreenState extends State<StartupDashboardScreen> {
         controller: scrollController,
         child: Column(
           children: [
-            _buildTopNavigation(),
             _buildHeroSection(user?.name ?? 'Startup'),
             _buildServicesSection(),
             _buildMyPostedOpportunities(),
@@ -98,62 +97,71 @@ class _StartupDashboardScreenState extends State<StartupDashboardScreen> {
           ],
         ),
       ),
+      bottomNavigationBar: _buildStartupBottomNavigation(),
     );
   }
 
-  Widget _buildTopNavigation() {
+  Widget _buildStartupBottomNavigation() {
     return Container(
-      height: 70,
-      padding: const EdgeInsets.symmetric(horizontal: 32),
-      color: Colors.white,
-      child: Row(
-        children: [
-          const Text(
-            'STARTUPBRIDGE',
-            style: TextStyle(
-              fontSize: 15,
-              letterSpacing: 1.4,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF1D1D1F),
-            ),
-          ),
-          const Spacer(),
-          _navButton('Home', goHome),
-          _navButton('Post', goPost),
-          _navButton('Applicants', goApplicants),
-          _navButton('Profile', goProfile),
-          const SizedBox(width: 16),
-          ElevatedButton(
-            onPressed: () => logout(context),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFFFB800),
-              foregroundColor: Colors.black,
-              elevation: 0,
-              padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(6),
-              ),
-            ),
-            child: const Text(
-              'Logout',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 12,
+            offset: const Offset(0, -4),
           ),
         ],
       ),
-    );
-  }
-
-  Widget _navButton(String text, VoidCallback onTap) {
-    return TextButton(
-      onPressed: onTap,
-      child: Text(
-        text,
-        style: const TextStyle(
-          color: Color(0xFF555555),
-          fontSize: 15,
-          fontWeight: FontWeight.w600,
+      child: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        currentIndex: 0,
+        backgroundColor: Colors.white,
+        selectedItemColor: const Color(0xFF6C35FF),
+        unselectedItemColor: const Color(0xFF555555),
+        selectedLabelStyle: const TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 12,
         ),
+        unselectedLabelStyle: const TextStyle(
+          fontWeight: FontWeight.w600,
+          fontSize: 12,
+        ),
+        onTap: (index) {
+          if (index == 0) {
+            goHome();
+          } else if (index == 1) {
+            goPost();
+          } else if (index == 2) {
+            goApplicants();
+          } else if (index == 3) {
+            goProfile();
+          } else if (index == 4) {
+            logout(context);
+          }
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_rounded),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_box_outlined),
+            label: 'Post',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.people_outline),
+            label: 'Applicants',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline),
+            label: 'Profile',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.logout),
+            label: 'Logout',
+          ),
+        ],
       ),
     );
   }
@@ -172,7 +180,7 @@ class _StartupDashboardScreenState extends State<StartupDashboardScreen> {
                 isWide ? CrossAxisAlignment.start : CrossAxisAlignment.center,
             children: [
               Text(
-                'Hello, $startupName 👋',
+                'Hello, $startupName ',
                 style: const TextStyle(
                   fontSize: 14,
                   color: Color(0xFF777777),
